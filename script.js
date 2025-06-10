@@ -9,10 +9,15 @@ addBtn.addEventListener("click", () => {
   const li = document.createElement("li");
   li.textContent = text;
 
-  li.addEventListener("click", () => {
-    li.classList.toggle("done"); // Styling für "erledigt"
-  });
+  const checkbox = document.createElement ("input")
+  checkbox.type = "checkbox"
+  checkbox.className = "tasks"
+
+  checkbox.addEventListener("change" , () =>
+    li.classList.toggle("done"));
+
 
   list.appendChild(li);
+  li.appendChild(checkbox)
   input.value = "";
 });
