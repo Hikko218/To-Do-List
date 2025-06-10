@@ -14,10 +14,20 @@ addBtn.addEventListener("click", () => {
   checkbox.className = "tasks"
 
   checkbox.addEventListener("change" , () =>
-    li.classList.toggle("done"));
-
+  li.classList.toggle("done"));
 
   list.appendChild(li);
-  li.appendChild(checkbox)
+  li.appendChild(checkbox);
   input.value = "";
+
+  let delBtn;
+
+  if (list.children.length > 0 && list.children.length <= 1) { 
+    delBtn = document.createElement ("button");
+    delBtn.id = "del-btn";
+    delBtn.textContent = "Delete";
+   }
+
+   const inputrow = document.getElementById ("input_row");
+   inputrow.appendChild(delBtn);
 });
