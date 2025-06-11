@@ -6,6 +6,7 @@ const delBtn = document.createElement ("button");
 const sortBtn = document.createElement ("button");
 const rstBtn = document.createElement ("button");
 const fltBtn = document.createElement ("button");
+const dmBtn = document.getElementById("dark-mode");
 
 // add button function
 
@@ -118,3 +119,19 @@ delBtn.addEventListener("click", () => {
     fltBtn.textContent = filtered ? "Filter" : "Show All"
     filtered = !filtered;
   });
+
+  // dark mode function
+
+  let darkmode = false;
+
+  dmBtn.addEventListener("click", () => {
+    const body = document.querySelector("body");
+    if(darkmode) {
+      body.style.backgroundColor = "#009ba7";
+      dmBtn.innerHTML = "dark-mode";
+    } else {
+      body.style.backgroundColor = "black";
+      dmBtn.innerHTML = "light-mode"};
+    
+      darkmode = !darkmode;
+    });

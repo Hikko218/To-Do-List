@@ -65,6 +65,15 @@ input::placeholder {
   background-color: red;
 }
 
+#dark-mode{
+  border: none;
+  border-radius: 10px;
+  padding: 8px;
+  color:#009ba7;
+  background-color:white;
+  box-shadow: 0px 0px 20px rgb(0, 0, 0);
+}
+
 .button {
   border: none;
   border-radius: 5px;
@@ -72,7 +81,7 @@ input::placeholder {
   color:white;
 }
 
-.button:hover {
+.button:hover, #dark-mode:hover {
   font-weight: bold;
 }
 
