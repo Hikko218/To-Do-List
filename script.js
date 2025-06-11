@@ -2,11 +2,12 @@ const input = document.getElementById("todo-input");
 const addBtn = document.getElementById("add-btn");
 const list = document.getElementById("todo-list");
 const inputrow = document.getElementById ("input_row");
-const inputfield = document.getElementById ("todo-input");
 const delBtn = document.createElement ("button");
 const sortBtn = document.createElement ("button");
 const rstBtn = document.createElement ("button");
 const fltBtn = document.createElement ("button");
+
+// add button function
 
 addBtn.addEventListener("click", () => {                      //add task event listener
   const text = input.value.trim();                            //check valid input
@@ -26,29 +27,35 @@ addBtn.addEventListener("click", () => {                      //add task event l
   li.appendChild(checkbox);
   input.value = "";                                           //clear previous input
 
-  // add delete, reset, filter button
-
-  if (list.children.length > 0 && list.children.length <= 1) { 
+  if (list.children.length > 0 && list.children.length <= 1) {   // add delete, reset, filter button
     delBtn.id = "del-btn";
+    delBtn.className = "button"
     delBtn.textContent = "Delete";
     inputrow.appendChild(delBtn);
 
     rstBtn.id = "rst-btn";
     rstBtn.textContent = "Reset";
-    inputrow.insertBefore(rstBtn, inputfield);
+    rstBtn.className = "button"
+    inputrow.insertBefore(rstBtn, input);
 
     fltBtn.id = "flt-btn";
     fltBtn.textContent = "Filter";
-    inputrow.insertBefore(fltBtn, inputfield);
+    fltBtn.className = "button"
+    inputrow.insertBefore(fltBtn, input);
    }
 
-   //add sort button
-
-  if (list.children.length > 1 && list.children.length <= 2) { 
+  if (list.children.length > 1 && list.children.length <= 2) {          //add sort button
     sortBtn.id = "sort-btn";
+    sortBtn.className = "button"
     sortBtn.textContent = "Sort";
     inputrow.appendChild(sortBtn);
    }
+});
+
+// input + enter function
+
+input.addEventListener("keydown", (e) => {
+  if (e.key === "Enter") addBtn.click();
 });
 
   // delete button function
@@ -60,11 +67,9 @@ delBtn.addEventListener("click", () => {
   if (checkbox && checkbox.checked) {
     task.remove();
   }
-  });
+  }); 
 
-  //if no list item / delete sort/delete button 
-
-  if (list.children.length === 0) {
+  if (list.children.length === 0) {         //if no list item / delete sort/delete button
     delBtn.remove();
     if (sortBtn) sortBtn.remove();
     if (rstBtn) rstBtn.remove();
