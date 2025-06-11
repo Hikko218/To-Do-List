@@ -8,6 +8,69 @@ const rstBtn = document.createElement ("button");
 const fltBtn = document.createElement ("button");
 const dmBtn = document.getElementById("dark-mode");
 
+// load storage after website refresh
+
+window.addEventListener("DOMContentLoaded", () => {
+  loadTasks();
+
+  if (list.children.length > 0) {
+    initButtons(); // Buttons korrekt initialisieren
+    inputrow.appendChild(delBtn);
+    inputrow.insertBefore(rstBtn, input);
+    inputrow.insertBefore(fltBtn, input);
+  }
+  if (list.children.length > 1) {
+    inputrow.appendChild(sortBtn);
+  }
+});
+
+// local storage
+
+function saveTasks() {
+  const tasks = Array.from(list.querySelectorAll("li")).map(li => {
+    const text = li.firstChild.textContent.trim();
+    const done = li.querySelector("input[type='checkbox']").checked;
+    return { text, done };
+  });
+  localStorage.setItem("todos", JSON.stringify(tasks));
+}
+
+// load task function
+
+function loadTasks() {
+  const data = localStorage.getItem("todos");
+  if (!data) return;
+
+  const tasks = JSON.parse(data);
+  tasks.forEach(task => {
+    const li = document.createElement("li");
+    li.textContent = task.text;
+
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.className = "tasks";
+    checkbox.checked = task.done;
+
+    if (task.done) {
+      li.classList.add("done");
+    }
+
+    checkbox.addEventListener("change", () => {
+      li.classList.toggle("done");
+      saveTasks();
+    });
+
+    li.appendChild(checkbox);
+    list.appendChild(li);
+  });
+}
+
+// delete button function
+
+function removeButtons(...buttons) {
+  buttons.forEach(btn => btn?.remove());
+}
+
 // add button function
 
 addBtn.addEventListener("click", () => {                      //add task event listener
@@ -51,6 +114,8 @@ addBtn.addEventListener("click", () => {                      //add task event l
     sortBtn.textContent = "Sort";
     inputrow.appendChild(sortBtn);
    }
+
+   saveTasks();
 });
 
 // input + enter function
@@ -59,66 +124,68 @@ input.addEventListener("keydown", (e) => {
   if (e.key === "Enter") addBtn.click();
 });
 
-  // delete button function
+ // button init function
 
-delBtn.addEventListener("click", () => {
- const tasks = list.querySelectorAll("li");
- tasks.forEach(task => {
-  const checkbox = task.querySelector("input[type='checkbox']");
-  if (checkbox && checkbox.checked) {
-    task.remove();
-  }
-  }); 
+ function initButtons() {
+  // Delete Button
+  delBtn.id = "del-btn";
+  delBtn.className = "button";
+  delBtn.textContent = "Delete";
+  delBtn.addEventListener("click", () => {
+    const tasks = list.querySelectorAll("li");
+    tasks.forEach(task => {
+      const checkbox = task.querySelector("input[type='checkbox']");
+      if (checkbox && checkbox.checked) task.remove();
+    });
+    if (list.children.length === 0) {
+      removeButtons(delBtn, rstBtn, fltBtn, sortBtn);
+    }
+    saveTasks();
+  });
 
-  if (list.children.length === 0) {         //if no list item / delete sort/delete button
-    delBtn.remove();
-    if (sortBtn) sortBtn.remove();
-    if (rstBtn) rstBtn.remove();
-    if (fltBtn) fltBtn.remove();
-  }
-});
-
-  // sort button function
-
+  // Sort Button
+  sortBtn.id = "sort-btn";
+  sortBtn.className = "button";
+  sortBtn.textContent = "Sort";
   sortBtn.addEventListener("click", () => {
     const items = Array.from(list.querySelectorAll("li"));
-
-    items.sort ((a, b) => {
+    items.sort((a, b) => {
       const textA = a.firstChild.textContent.toLowerCase();
       const textB = b.firstChild.textContent.toLowerCase();
       return textA.localeCompare(textB);
     });
-
     list.innerHTML = "";
     items.forEach(item => list.appendChild(item));
-});
-
-  // reset button function
-
-  rstBtn.addEventListener("click", () => {
-    const items = list.querySelectorAll("li");
-    items.forEach (item => item.remove());
-    rstBtn.remove();
-    fltBtn.remove();
-    delBtn.remove();
-    sortBtn.remove();
+    saveTasks();
   });
 
-   // filter button function
+  // Reset Button
+  rstBtn.id = "rst-btn";
+  rstBtn.textContent = "Reset";
+  rstBtn.className = "button";
+  rstBtn.addEventListener("click", () => {
+    list.innerHTML = "";
+    removeButtons(delBtn, rstBtn, fltBtn, sortBtn);
+    localStorage.removeItem("todos");
+  });
 
+  // Filter Button
+  fltBtn.id = "flt-btn";
+  fltBtn.textContent = "Filter";
+  fltBtn.className = "button";
   let filtered = false;
-
   fltBtn.addEventListener("click", () => {
     const tasks = list.querySelectorAll("li");
     tasks.forEach(task => {
-    const checkbox = task.querySelector("input[type='checkbox']");
-    if (checkbox && checkbox.checked) {
-    task.style.display = filtered ? "list-item" : "none" ;
-    }
+      const checkbox = task.querySelector("input[type='checkbox']");
+      if (checkbox && checkbox.checked) {
+        task.style.display = filtered ? "list-item" : "none";
+      }
     });
-    fltBtn.textContent = filtered ? "Filter" : "Show All"
+    fltBtn.textContent = filtered ? "Filter" : "Show All";
     filtered = !filtered;
   });
+}
 
   // dark mode function
 
