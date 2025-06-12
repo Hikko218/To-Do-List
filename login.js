@@ -1,4 +1,9 @@
-const form = document.getElementById("login-form");
+const form = document.getElementById("login-div");
+const todo = document.getElementById("todo-div");
+const loginBtn = document.getElementById("login-btn");
+const logoutBtn = document.getElementById("logout-btn");
+
+const loggedIn = false;
 
 form.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -16,8 +21,23 @@ form.addEventListener("submit", async (e) => {
 
   if (data.success) {
     alert("Login successful!");
-    // z.B. To-Do-Seite anzeigen oder Token speichern
+    // ✅ Nach erfolgreichem Login:
+    form.style.display = "none";
+    todo.style.display = "block";
+
+    loggedIn = true;
+
   } else {
     alert("Login failed");
+  }
+});
+
+// Logout button
+
+logoutBtn.addEventListener("click", () => {
+  if (loggedIn) {
+    loggedIn = false;
+    form.style.display = "block";
+    todo.style.display = "none";
   }
 });

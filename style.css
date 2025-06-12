@@ -1,7 +1,27 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
 body {
   font-family: sans-serif;
   background-color: #009ba7;
   text-align: center;
+}
+
+#login-div {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  height: 100vh;
+}
+
+#username,
+#password,
+#login-btn {
+  margin-bottom: 15px;
 }
 
 #todo-container {
@@ -12,6 +32,7 @@ body {
   border-radius: 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
   flex-direction: column;
   text-align: center;
 }
@@ -51,12 +72,10 @@ input::placeholder {
 
 form {
   display:flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 10px;
-  padding-bottom: 20px;
-  gap:10px;
+  max-width: 200px;
+  width: 100%;
 }
 
 #username, #password {
@@ -65,13 +84,20 @@ form {
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
 
-#login-btn{
+#login-btn, #logout-btn{
   border: none;
   border-radius: 10px;
   padding: 7px;
-  background-color: rgb(3, 243, 3);
   color:white;
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
+}
+
+#login-btn {
+  background-color: rgb(3, 243, 3);
+}
+
+#logout-btn{
+  background-color: rgb(255, 9, 9);
 }
 
 #sort-btn{
@@ -93,7 +119,8 @@ form {
 #dark-mode{
   border: none;
   border-radius: 10px;
-  padding: 6px;
+  padding:6px;
+  margin-top: 10px;
   color:#009ba7;
   background-color:white;
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
@@ -106,7 +133,7 @@ form {
   color:white;
 }
 
-.button:hover, #dark-mode:hover, #login-btn:hover {
+.button:hover, #dark-mode:hover, #login-btn:hover, #logout-btn:hover {
   font-weight: bold;
 }
 
