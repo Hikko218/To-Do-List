@@ -1,0 +1,12 @@
+# Backend dependencies
+Backend/node_modules/
+
+# Log-Dateien
+*.log
+
+# Umgebungsvariablen (falls du .env benutzt)
+Backend/.env
+
+# Editor-/Systemdateien (optional)
+.vscode/
+.DS_Store

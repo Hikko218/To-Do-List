@@ -7,6 +7,11 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <form id="login-form">
+  <input type="text" id="username" placeholder="Username" required />
+  <input type="password" id="password" placeholder="Password" required />
+  <button type="submit" id="login-btn">Login</button>
+  </form>
   <button id="dark-mode"> dark-mode</button>
   <h1>To-Do-List</h1>
   <div id="todo-container">
@@ -17,5 +22,6 @@
     <ul id="todo-list"></ul>
   </div>
   <script src="script.js"></script>
+  <script src="login.js"></script>
 </body>
 </html>
