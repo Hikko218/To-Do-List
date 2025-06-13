@@ -84,7 +84,7 @@ form {
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
 
-#login-btn, #logout-btn{
+#login-btn, #logout-btn, #reg-btn{
   border: none;
   border-radius: 10px;
   padding: 7px;
@@ -99,6 +99,10 @@ form {
 #logout-btn{
   margin-top: 10px;
   background-color: rgb(255, 9, 9);
+}
+
+#reg-btn {
+  background-color: burlywood;
 }
 
 #sort-btn{
@@ -117,6 +121,22 @@ form {
   background-color: red;
 }
 
+.button {
+  border: none;
+  border-radius: 5px;
+  padding: 4px;
+  color:white;
+}
+
+.button:hover, #dark-mode:hover, #login-btn:hover, #logout-btn:hover, #reg-btn:hover {
+  font-weight: bold;
+}
+
+.done {
+  text-decoration: line-through;
+  color: black;
+}
+
 #dark-mode{
   border: none;
   border-radius: 10px;
@@ -125,20 +145,4 @@ form {
   color:#009ba7;
   background-color:white;
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
-}
-
-.button {
-  border: none;
-  border-radius: 5px;
-  padding: 4px;
-  color:white;
-}
-
-.button:hover, #dark-mode:hover, #login-btn:hover, #logout-btn:hover {
-  font-weight: bold;
-}
-
-.done {
-  text-decoration: line-through;
-  color: black;
 }

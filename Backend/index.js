@@ -18,6 +18,14 @@ app.use(cors({
 const loginRoute = require('./routes/login');
 app.use('/login', loginRoute);
 
+// Import registerroute and use it under '/register' path
+const registerRoute = require('./routes/register');
+app.use('/api', registerRoute);
+
+// Auth middleware
+const authenticateToken = require('./authMiddleware');
+app.use("/auth/todos", authenticateToken);
+
 // Define a simple GET route for root path
 
 app.get('/', (req, res) => {

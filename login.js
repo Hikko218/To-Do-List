@@ -4,38 +4,45 @@ const todo = document.getElementById("todo-div");
 const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
 const loginDiv = document.getElementById("login-div");
+const regBtn = document.getElementById("reg-btn");
 
 let loggedIn = false;                     // Track the login state
 
-// Handle login form submission
-form.addEventListener("submit", async (e) => {
-  e.preventDefault();                             // Prevent default form submit behavior
 
-  // Send login data to backend
-  const res = await fetch("http://localhost:3000/login", {
+// Handle register/login
+form.addEventListener("submit", async function (e) {
+  e.preventDefault();
+
+  const formData = new FormData(e.target);
+  const action   = e.submitter?.value; // "login" or "register"
+  const username = formData.get("username");
+  const password = formData.get("password");
+
+  form.reset();
+
+  const url = action === "login"
+    ? "http://localhost:3000/login"
+    : "http://localhost:3000/api/register";
+
+  const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      username: form.username.value,
-      password: form.password.value,
-    }),
+    body: JSON.stringify({ username, password })
   });
 
   const data = await res.json();
 
-   // Check login success
   if (data.success) {
-    alert("Login successful!");
-    // Hide login form and show the todo section
+    alert(`${action} successful!`);
+    loggedIn = true;
+    // Show login again and hide todo section
     loginDiv.style.display = "none";
     todo.style.display = "block";
-
-    loggedIn = true;
-
   } else {
-    alert("Login failed");
+    alert(`${action} failed: ${data.message}`);
   }
 });
+
 
 // Handle logout
 logoutBtn.addEventListener("click", () => {

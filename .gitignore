@@ -10,3 +10,6 @@ Backend/.env
 # Editor-/Systemdateien (optional)
 .vscode/
 .DS_Store
+
+# Enhancements reminder
+Enhancements.docx

@@ -1,16 +1,35 @@
-const express = require('express');               // Import Express framework
-const router = express.Router();                  // Create a new router instance
+const express = require('express');
+const router = express.Router();
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-// In-memory user list (in a real app, you'd use a database)
-const USERS = [{ username: "admin", password: "1234" }];
+// Beispielhafter Speicher – in der Realität wäre das eine Datenbank
+const users = require('./data/users');
 
+const JWT_SECRET = "your_secret_key"; // Im echten Projekt .env nutzen
 
-/* POST route to handle login requests * The client sends { username, password } in the request body*/
-router.post('/', (req, res) => {
-  const { username, password } = req.body;                                                // Extract username and password from the request body
-  const user = USERS.find(u => u.username === username && u.password === password);      // Check if the user exists in the USERS array
-  res.json({ success: !!user });                                                        // Respond with success: true if user was found, otherwise false
+router.post("/", async (req, res) => {
+  const { username, password } = req.body;
+
+  const user = users.find(u => u.username === username);
+  if (!user) {
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
+
+  const validPassword = await bcrypt.compare(password, user.password);
+  if (!validPassword) {
+    return res.status(401).json({ message: "Invalid username or password" });
+  }
+
+  // Token erzeugen
+  const token = jwt.sign({ username: user.username }, JWT_SECRET, { expiresIn: '1h' });
+
+  return res.status(200).json({
+    success: true,
+    message: "Login successful",
+    token: token
+  });
 });
 
-// Export the router so it can be used in the main server file
 module.exports = router;
+
