@@ -13,24 +13,26 @@ let loggedIn = false;                     // Track the login state
 form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
-  const formData = new FormData(e.target);
-  const action   = e.submitter?.value; // "login" or "register"
+  const formData = new FormData(e.target);   // Get form input values
+  const action   = e.submitter?.value;       // Get which button was clicked: "login" or "register"
   const username = formData.get("username");
   const password = formData.get("password");
 
-  form.reset();
+  form.reset();         // Clear form fields
 
+  // Choose URL based on action
   const url = action === "login"
     ? "http://localhost:3000/login"
     : "http://localhost:3000/api/register";
 
+    // Send POST request to backend
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })
+    body: JSON.stringify({ username, password })    //Send data as JSON
   });
 
-  const data = await res.json();
+  const data = await res.json();                    // Parse JSON response from backend
 
   if (data.success) {
     alert(`${action} successful!`);
