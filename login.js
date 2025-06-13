@@ -1,14 +1,18 @@
-const form = document.getElementById("login-div");
+// Get necessary HTML elements
+const form = document.getElementById("login-form");
 const todo = document.getElementById("todo-div");
 const loginBtn = document.getElementById("login-btn");
 const logoutBtn = document.getElementById("logout-btn");
+const loginDiv = document.getElementById("login-div");
 
-const loggedIn = false;
+let loggedIn = false;                     // Track the login state
 
+// Handle login form submission
 form.addEventListener("submit", async (e) => {
-  e.preventDefault();
+  e.preventDefault();                             // Prevent default form submit behavior
 
-  const res = await fetch("https://3000-Hikko218.github.dev/login", {
+  // Send login data to backend
+  const res = await fetch("http://localhost:3000/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
@@ -19,10 +23,11 @@ form.addEventListener("submit", async (e) => {
 
   const data = await res.json();
 
+   // Check login success
   if (data.success) {
     alert("Login successful!");
-    // ✅ Nach erfolgreichem Login:
-    form.style.display = "none";
+    // Hide login form and show the todo section
+    loginDiv.style.display = "none";
     todo.style.display = "block";
 
     loggedIn = true;
@@ -32,12 +37,12 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-// Logout button
-
+// Handle logout
 logoutBtn.addEventListener("click", () => {
   if (loggedIn) {
     loggedIn = false;
-    form.style.display = "block";
+    // Show login again and hide todo section
+    loginDiv.style.display = "";
     todo.style.display = "none";
   }
 });

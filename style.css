@@ -97,6 +97,7 @@ form {
 }
 
 #logout-btn{
+  margin-top: 10px;
   background-color: rgb(255, 9, 9);
 }
 
