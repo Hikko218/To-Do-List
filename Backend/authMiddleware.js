@@ -2,6 +2,7 @@ const express = require('express');               // Import Express framework
 const router = express.Router();                  // Create a new router instance
 
 const jwt = require("jsonwebtoken");              // Import the JSON Web Token library
+const JWT_SECRET = "your_secret_key";
 
 // Middleware function to authenticate incoming requests using a JWT
 function authenticateToken(req, res, next) {
@@ -12,7 +13,7 @@ function authenticateToken(req, res, next) {
   if (!token) return res.status(401).json({ message: 'Token required' });
 
    // Verify the token using the secret key
-  jwt.verify(token, 'my_secret_key', (err, user) => {
+  jwt.verify(token, JWT_SECRET, (err, user) => {
     if (err) return res.status(403).json({ message: 'Invalid token' });
 
     req.user = user;    // Attach decoded user data to the request object

@@ -27,6 +27,10 @@ app.use('/api', registerRoute);
 const accountRoutes = require('./routes/account');
 app.use('/api', accountRoutes);  // → DELETE /api/account
 
+// Task route
+const taskRoutes = require('./routes/tasks');
+app.use('/api/tasks', taskRoutes); 
+
 // Auth middleware
 const authenticateToken = require('./authMiddleware');
 app.use("/auth/todos", authenticateToken);
