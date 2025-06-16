@@ -11,7 +11,7 @@ const dmBtn = document.getElementById("dark-mode");
 // load storage after website refresh
 
 window.addEventListener("DOMContentLoaded", () => {
-  loadTasks();
+  loadTasksFromServer();
 
   if (list.children.length > 0) {
     initButtons(); // Buttons korrekt initialisieren
@@ -24,46 +24,34 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// local storage
-
-function saveTasks() {
+//safe task function
+async function saveTasksToServer() {
   const tasks = Array.from(list.querySelectorAll("li")).map(li => {
     const text = li.firstChild.textContent.trim();
     const done = li.querySelector("input[type='checkbox']").checked;
     return { text, done };
   });
-  localStorage.setItem("todos", JSON.stringify(tasks));
-}
 
-// load task function
-
-function loadTasks() {
-  const data = localStorage.getItem("todos");
-  if (!data) return;
-
-  const tasks = JSON.parse(data);
-  tasks.forEach(task => {
-    const li = document.createElement("li");
-    li.textContent = task.text;
-
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.className = "tasks";
-    checkbox.checked = task.done;
-
-    if (task.done) {
-      li.classList.add("done");
-    }
-
-    checkbox.addEventListener("change", () => {
-      li.classList.toggle("done");
-      saveTasks();
-    });
-
-    li.appendChild(checkbox);
-    list.appendChild(li);
+  await fetch("http://localhost:3000/auth/todos", {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Bearer " + localStorage.getItem("token")
+    },
+    body: JSON.stringify({ tasks })
   });
 }
+
+//load tasks function
+async function loadTasksFromServer() {
+  const res = await fetch("http://localhost:3000/auth/todos", {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("token")
+    }
+  });
+  const tasks = await res.json();
+}
+
 
 // delete button function
 
@@ -71,7 +59,7 @@ function removeButtons(...buttons) {
   buttons.forEach(btn => btn?.remove());
 }
 
-// add button function
+// add tasks button function
 
 addBtn.addEventListener("click", () => {                      //add task event listener
   const text = input.value.trim();                            //check valid input
@@ -115,7 +103,7 @@ addBtn.addEventListener("click", () => {                      //add task event l
     inputrow.appendChild(sortBtn);
    }
 
-   saveTasks();
+   saveTasksToServer();
 });
 
 // input + enter function
@@ -140,7 +128,7 @@ input.addEventListener("keydown", (e) => {
     if (list.children.length === 0) {
       removeButtons(delBtn, rstBtn, fltBtn, sortBtn);
     }
-    saveTasks();
+    saveTasksToServer();
   });
 
   // Sort Button

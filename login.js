@@ -59,6 +59,8 @@ form.addEventListener("submit", async function (e) {
   
     if (action === "login") { 
     loggedIn = true;
+    // 🔐 safe Token in localStorage
+    localStorage.setItem("token", data.token);
     // Show todo hide login
     loginDiv.style.display = "none";
     todo.style.display = "block";
@@ -74,6 +76,8 @@ form.addEventListener("submit", async function (e) {
 logoutBtn.addEventListener("click", () => {
   if (loggedIn) {
     loggedIn = false;
+    // remove token from localStorage
+    localStorage.removeItem("token");
     // Show login again and hide todo section
     loginDiv.style.display = "";
     todo.style.display = "none";
