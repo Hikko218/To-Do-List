@@ -109,20 +109,16 @@ form {
   margin-top: 10px;
 }
 
-#sort-btn{
-  margin-left: 5px;
-}
-
-#flt-btn, #rst-btn {
-  margin-right: 5px;
-}
-
 #flt-btn, #add-btn,#sort-btn {
   background-color: rgb(3, 243, 3);
 }
 
 #del-btn, #rst-btn {
   background-color: red;
+}
+
+#del-btn, #flt-btn, #rst-btn, #sort-btn {
+  visibility: hidden;
 }
 
 .button {
