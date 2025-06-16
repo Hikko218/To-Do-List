@@ -20,26 +20,50 @@ form.addEventListener("submit", async function (e) {
 
   form.reset();         // Clear form fields
 
-  // Choose URL based on action
-  const url = action === "login"
-    ? "http://localhost:3000/login"
-    : "http://localhost:3000/api/register";
+  //Url 
+  const urlhome = "http://localhost:3000"
 
-    // Send POST request to backend
+  // Choose URL based on action
+  let url = "";
+
+  if (action === "login") {
+  url = `${urlhome}/login`;
+  } else if (action === "register") {
+  url = `${urlhome}/api/register`;
+  } else if (action === "deleteAcc") {
+  url = `${urlhome}/api/account`;
+  }
+  //Choose method based on action
+  let method;
+  switch (action) {
+  case "login":
+  case "register":
+    method = "POST";
+    break;
+  case "deleteAcc":
+    method = "DELETE";
+    break;
+  }
+  //Send data to Backend
   const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ username, password })    //Send data as JSON
+  method,
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ username, password })        //Send data as JSON
   });
+
 
   const data = await res.json();                    // Parse JSON response from backend
 
   if (data.success) {
     alert(`${action} successful!`);
+  
+    if (action === "login") { 
     loggedIn = true;
-    // Show login again and hide todo section
+    // Show todo hide login
     loginDiv.style.display = "none";
     todo.style.display = "block";
+    }
+
   } else {
     alert(`${action} failed: ${data.message}`);
   }

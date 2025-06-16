@@ -21,7 +21,7 @@ body {
 #username,
 #password,
 #login-btn {
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 #todo-container {
@@ -84,10 +84,10 @@ form {
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
 
-#login-btn, #logout-btn, #reg-btn{
+#login-btn, #logout-btn, #reg-btn, #delAcc-btn{
   border: none;
   border-radius: 10px;
-  padding: 7px;
+  padding: 6px;
   color:white;
   box-shadow: 0px 0px 20px rgb(0, 0, 0);
 }
@@ -103,6 +103,10 @@ form {
 
 #reg-btn {
   background-color: burlywood;
+}
+#delAcc-btn {
+  background-color: rgb(255, 9, 9);
+  margin-top: 10px;
 }
 
 #sort-btn{
@@ -128,7 +132,7 @@ form {
   color:white;
 }
 
-.button:hover, #dark-mode:hover, #login-btn:hover, #logout-btn:hover, #reg-btn:hover {
+.button:hover, #dark-mode:hover, #login-btn:hover, #logout-btn:hover, #reg-btn:hover, #delAcc-btn:hover {
   font-weight: bold;
 }
 

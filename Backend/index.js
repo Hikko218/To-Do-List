@@ -5,22 +5,27 @@ app.use(express.json());                             // Middleware to parse JSON
 
 const cors = require('cors');                        // Import CORS middleware
 
+const urlhome = "http://127.0.0.1:5500"
+
 // Enable CORS to allow requests from specific origin (frontend, e.g., local HTML file)
 
-app.use(cors({
-  origin: "http://127.0.0.1:5500",                  // Allow this origin to access the backend            
+app.use(cors({                                      
+  origin: urlhome,                                  // Allow this origin to access the backend            
   methods: ["GET", "POST", "PUT", "DELETE"],        // Allowed HTTP methods
   credentials: false                                // No cookies or credentials are sent
 }));
 
 // Import login route and use it under '/login' path
-
 const loginRoute = require('./routes/login');
 app.use('/login', loginRoute);
 
 // Import registerroute and use it under '/register' path
 const registerRoute = require('./routes/register');
 app.use('/api', registerRoute);
+
+// Del Account route
+const accountRoutes = require('./routes/account');
+app.use('/api', accountRoutes);  // → DELETE /api/account
 
 // Auth middleware
 const authenticateToken = require('./authMiddleware');
